@@ -2,8 +2,11 @@
 Maven is a tool used to create code and turn your code into an artifact. This plugin is frequently used to incorporate continuous integration.
 #### Prerequisites
 1. Jenkins server
+
 a) Setup Maven on Jenkins Server.
+
 b) Install Maven Plugin on jenkins GUI.  
+
 c) Configure Maven and Java.
 ```bash
  # Creating maven directory under /opt
