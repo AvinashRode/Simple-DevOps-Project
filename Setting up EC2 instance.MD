@@ -1,7 +1,13 @@
 
-# 1. Setting up EC2 instance
+# Setting up EC2 instance
 
-1. Prerequisites.
+1. Prerequisites
+
+    EC2 Instance
+    
+     * With Internet Access
+        
+     * Security Group with Port 8080 open for internet
 
 2. Create a key pair using Amazon EC2. If you already have one, you can skip to step 3.
 
