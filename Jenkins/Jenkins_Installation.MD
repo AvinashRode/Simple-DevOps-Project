@@ -7,12 +7,12 @@ In this step you will deploy Jenkins on your EC2 instance by completing the foll
 2. Prerequisites
 The tool that you use to connect to your Linux instance depends on your operating system.
 
-
    a) If your computer runs Windows, you will connect using PuTTY.
 
    b) If your computer runs Linux or Mac OS X, you will connect using the SSH client.
  
 3. Using SSH to connect to your instance
+   
    a) Open an SSH client.
 
    b) Locate your private key file. The key used to launch this instance is demo-project-keypair.pem
@@ -30,6 +30,7 @@ The tool that you use to connect to your Linux instance depends on your operatin
       ```
 
 4. Downloading and installing Jenkins
+   
    a) Ensure that your software packages are up to date on your instance by uing the following command to perform a quick software update:
 
       ```bash
@@ -75,8 +76,8 @@ The tool that you use to connect to your Linux instance depends on your operatin
 Git is one of the most popular tools for version control system. you can pull code from git repositories using jenkins if you use github plugin.
 
 #### Prerequisites
-1. Jenkins server
-   Install Git and Git packages on jenkins server
+Jenkins server
+Install Git and Git packages on jenkins server
    ```bash
    $ yum install git -y
    ```
