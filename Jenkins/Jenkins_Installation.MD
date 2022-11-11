@@ -1,61 +1,113 @@
-# Install Jenkins on AWS EC2
-Jenkins is a self-contained Java-based program, ready to run out-of-the-box, with packages for Windows, Mac OS X and other Unix-like operating systems. As an extensible automation server, Jenkins can be used as a simple CI server or turned into the continuous delivery hub for any project.
+# 2. Installing and configuring Jenkins
+In this step you will deploy Jenkins on your EC2 instance by completing the following tasks:
 
-### Follow this artical [On YouTube Channel](https://youtu.be/ERR7cqW28FY)
+### Connecting to your Linux instance
+1. Select the instance and locate Public DNS.
 
-### Prerequisites
-1. EC2 Instance 
-   - With Internet Access
-   - Security Group with Port `8080` open for internet
-1. Java 11 should be installed  
+2. Prerequisites
+The tool that you use to connect to your Linux instance depends on your operating system.
 
+a) If your computer runs Windows, you will connect using PuTTY.
 
-## Install Jenkins
- You can install jenkins using the rpm or by setting up the repo. We will set up the repo so that we can update it easily in the future.
-1. Get the latest version of jenkins from https://pkg.jenkins.io/redhat-stable/ and install
-   ```sh
-   sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-   sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-   amazon-linux-extras install epel 
-   amazon-linux-extras install java-openjdk11  
+b) If your computer runs Linux or Mac OS X, you will connect using the SSH client.
+ 
+3. Using SSH to connect to your instance
+a) Open an SSH client.
+
+b) Locate your private key file. The key used to launch this instance is demo-project-keypair.pem
+
+c) Run this command, if necessary, to ensure your key is not publicly viewable.
+```bash
+$ chmod 400 demo-project-keypair.pem
+```
+
+d) Connect to your instance using its Public IP:
+18.196.179.155
+Example:
+```bash
+ ssh -i "demo-project-keypair.pem" ec2-user@18.196.179.155
+```
+
+4. Downloading and installing Jenkins
+a) Ensure that your software packages are up to date on your instance by uing the following command to perform a quick software update:
+
+```bash
+$ sudo yum update –y
+```
+
+b) Add the Jenkins repo using the following command:
+```bash
+$ sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+```
+
+c) Import a key file from Jenkins-CI to enable installation from the package:
+```bash
+$ sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+$ sudo yum upgrade
+```
+
+d) Install Java:
+```bash
+$ sudo amazon-linux-extras install java-openjdk11 -y
+```
+
+e) Install Jenkins:
+```bash
+$ sudo yum install jenkins -y
+```
+
+f) Enable the Jenkins service to start at boot:
+```bash
+$ sudo systemctl enable jenkins
+```
+
+g) Start Jenkins as a service:
+```bash
+$ sudo systemctl start jenkins
+```
+
+h) You can check the status of the Jenkins service using the command:
+```bash
+$ sudo systemctl status jenkins
+```
+### Configure Git pulgin on Jenkins
+Git is one of the most popular tools for version control system. you can pull code from git repositories using jenkins if you use github plugin.
+
+#### Prerequisites
+1. Jenkins server
+Install Git and Git packages on jenkins server
+```bash
+$ yum install git -y
+```
+### Integrate maven with Jenkins
+Maven is a tool used to create code and turn your code into an artifact. This plugin is frequently used to incorporate continuous integration.
+#### Prerequisites
+1. Jenkins server
+
+a) Setup Maven on Jenkins Server.
    
-   #on RedHat/CentOs 
-   #yum install epel-release # repository that provides 'daemonize'
-   #yum install java-11-openjdk-devel
-   #yum install jenkins
-   ```
+b) Install Maven Plugin on jenkins GUI.
+   
+c) Configure Maven and Java.
 
-   ### Start Jenkins
-   ```sh
-   # Start jenkins service
-   service jenkins start
-
-   # Setup Jenkins to start at boot,
-   chkconfig jenkins on
-   ```
-
-   ### Accessing Jenkins
-   By default jenkins runs at port `8080`, You can access jenkins at
-   ```sh
-   http://YOUR-SERVER-PUBLIC-IP:8080
-   ```
-  #### Configure Jenkins
-- The default Username is `admin`
-- Grab the default password 
-- Password Location:`/var/lib/jenkins/secrets/initialAdminPassword`
-- `Skip` Plugin Installation; _We can do it later_
-- Change admin password
-   - `Admin` > `Configure` > `Password`
-- Configure `java` path
-  - `Manage Jenkins` > `Global Tool Configuration` > `JDK`  
-- Create another admin user id
-
-### Test Jenkins Jobs
-1. Create “new item”
-1. Enter an item name – `My-First-Project`
-   - Chose `Freestyle` project
-1. Under the Build section
-	Execute shell: echo "Welcome to Jenkins Demo"
-1. Save your job 
-1. Build job
-1. Check "console output"
+```bash
+ # Creating maven directory under /opt
+ mkdir /opt/maven
+ cd /opt/maven
+ # downloading maven version 3.6.0
+ wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz
+ tar -xvzf apache-maven-3.6.1-bin.tar.gz
+```
+d) Setup Enviroment Variables.
+JAVA_HOME, M2, M2_HOME
+```bash
+ # Creating maven directory under /opt
+vi ~/.bash_profile
+M2_HOME=/opt/maven/apache-maven-3.6.1
+M2=$M2_HOME/bin
+PATH=<Existing_PATH>:$M2_HOME:$M2
+```
+e) logoff and login to check maven version
+```bash
+mvn --version
+```
