@@ -16,7 +16,7 @@ Maven is a tool used to create code and turn your code into an artifact. This pl
  wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz
  tar -xvzf apache-maven-3.6.1-bin.tar.gz
 ```
-d) Setup Enviroment Variables.
+   d) Setup Enviroment Variables.
 JAVA_HOME, M2, M2_HOME
 ```bash
  # Creating maven directory under /opt
@@ -25,7 +25,7 @@ M2_HOME=/opt/maven/apache-maven-3.6.1
 M2=$M2_HOME/bin
 PATH=<Existing_PATH>:$M2_HOME:$M2
 ```
-e) logoff and login to check maven version
+   e) logoff and login to check maven version
 ```bash
 mvn --version
 ```
