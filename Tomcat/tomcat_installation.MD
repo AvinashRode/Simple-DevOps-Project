@@ -1,4 +1,4 @@
-# 4. Integrating Tomcat server in CI/CD
+# Integrating Tomcat server in CI/CD
 steps
 
    a) Setup a Linux EC2 Instance
